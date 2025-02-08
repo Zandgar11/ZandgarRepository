@@ -1,1 +1,53 @@
-
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CheatSheets - Sécurité & Réseau</title>
+    <link rel="stylesheet" href="assets/styles.css">
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            fetch("docs/")
+                .then(response => response.text())
+                .then(text => {
+                    let parser = new DOMParser();
+                    let doc = parser.parseFromString(text, "text/html");
+                    let links = doc.querySelectorAll("a");
+                    let list = document.getElementById("file-list");
+                    links.forEach(link => {
+                        let href = link.getAttribute("href");
+                        if (href && href !== "../") {
+                            let li = document.createElement("li");
+                            let a = document.createElement("a");
+                            a.href = "docs/" + href;
+                            a.textContent = href;
+                            li.appendChild(a);
+                            list.appendChild(li);
+                        }
+                    });
+                })
+                .catch(error => console.error("Erreur lors du chargement des fichiers :", error));
+        });
+    </script>
+</head>
+<body>
+    <header>
+        <h1>CheatSheets - Sécurité & Réseau</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="about.html">À propos</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        <h2>Liste des CheatSheets</h2>
+        <ul id="file-list"></ul>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 - Projet de CheatSheets</p>
+    </footer>
+</body>
+</html>
